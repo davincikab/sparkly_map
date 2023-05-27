@@ -165,7 +165,7 @@ map.on('load', () => {
     // after the GeoJSON data is loaded, update markers on the screen on every frame
     map.on('render', () => {
         if (!map.isSourceLoaded('locations')) return;
-        // updateMarkers();
+        updateMarkers();
     });
 });
 
