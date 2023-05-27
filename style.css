@@ -1,0 +1,598 @@
+body { 
+    margin: 0; 
+    padding: 0; 
+    font-family: 'Roboto', sans-serif;
+}
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+#map { 
+    height:90vh;
+    width: 100%; 
+    /* background-color: grey; */
+    font-family: 'Roboto', sans-serif;
+}
+
+.custom-cluster {
+    position: relative;
+    border-radius: 50%;
+    border-width: 7px;
+    border-style: none;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    /* border-color: #22a7b5; */
+    background-color:rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+.custom-cluster .cluster_inner {
+    /* position: absolute; */
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color:rgba(0, 0, 0, 0.3);
+    z-index: 0;
+
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.custom-cluster .text-section {
+    /* position: absolute; */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color:rgba(0, 0, 0, 1);
+    z-index: 1;
+
+    justify-content: center;
+    align-items: center;
+    display: flex;
+
+    color: cornsilk;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.custom-cluster > * {
+    pointer-events: none;
+}
+
+.mapboxgl-ctrl-geocoder .suggestions > li > a {
+    text-align: left !important;
+}
+
+.mapboxgl-ctrl.mapboxgl-ctrl-group {
+    background-color: transparent;
+    box-shadow: none !important;
+}
+
+.mapboxgl-ctrl.mapboxgl-ctrl-group .mapboxgl-ctrl-zoom-in, 
+.mapboxgl-ctrl.mapboxgl-ctrl-group .mapboxgl-ctrl-zoom-out {
+    background: white;
+    border-radius: 50%;
+    margin: 5px 0;
+    box-shadow: 0 0 0 2px rgba(0,0,0,.1);
+}
+
+.mapboxgl-popup-tip, .mapboxgl-popup-close-button {
+    display: none;
+}
+
+.mapboxgl-popup-content {
+    border-radius: 8px;
+    min-width: 150px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.popup-content .title {
+    font-weight: 800;
+    font-size: 15px;
+}
+
+.popup-content .address {
+    color:#2e2e2e;
+    font-weight: 600;
+}
+
+.popup-content .direction-button {
+    background-color: #000;
+    color:white;
+    border:none;
+    border-radius: 20px;
+    padding:5px;
+    text-align: center;
+
+    width: 60%;
+    margin-top: 5px;
+    margin-left: 20%;
+}
+
+/* search header */
+.search-section {
+    height: 10%;
+    padding: 0.5rem;
+    background-image: linear-gradient(#f3f3f3, #f2f2f2, #fff);
+
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 3;
+}
+
+.search-section .geocoder-wrapper {
+    border-radius: 20px;
+    border:2px solid #000;
+    background-color: white;
+    height: 30px;
+    width: auto;
+    text-align: center;
+
+    display: flex;
+    align-items: center;
+    /* overflow: hidden; */
+    margin-right: 10px;
+    height: 100%;
+}
+
+#geocoder input {
+    border:none;
+    box-shadow: none;
+}
+
+#geocoder {
+    position: relative;
+    min-width:200px;
+    /* overflow: hidden; */
+    width: 92%;
+}
+/* .mapboxgl-ctrl-geocoder */
+.mapboxgl-ctrl-geocoder {
+    width: 100% !important;
+    max-width: auto !important;
+    min-width: auto !important;
+    border-radius: 20px !important;
+    box-shadow: none !important;
+}
+
+.mapboxgl-ctrl-geocoder--input:focus {
+    outline: none !important;
+}
+
+::placeholder {
+    font-weight: 600;
+    font-size: 13px;
+    color:#727272;
+    font-family: 'Roboto', sans-serif;
+}
+
+.geocoder-wrapper .btn-find {
+    background-color: #000;
+    color: white;
+    display: flex;
+    border:none;
+    border-radius: 20px;
+    height: 32px;
+    width: 20%;
+    margin-right: 2px;
+    font-weight: 600;
+    /* margin:2px; */
+
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.filter-wrapper {
+    align-items: center;
+    height: 40px;
+}
+
+.filter-wrapper .toggler {
+    height: 100%;
+}
+
+.filter-wrapper .toggler select {
+    border-radius: 20px;
+    border:2px solid #000;
+    height: 100%;
+    width: 150px;
+    text-align: center;
+    font-weight: 600;
+    color:#222;
+}
+
+.toggler select option {
+    accent-color:orange;
+}
+
+.view-wrapper {
+    border-radius: 20px;
+    border:2px solid #000;
+    width: 80px;
+    height:36px;
+    text-align: center;
+
+    align-items: center;
+    margin:0px 10px;
+    display: flex;
+    display: none !important;
+}
+
+.view-wrapper .view-btn {
+    flex: 1;
+    min-width: 30px;
+    border-radius: 20px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2px;
+    margin-right: 2px;
+    cursor: pointer;
+}
+
+.view-btn > * {
+    pointer-events: none;
+}
+
+.view-btn.active {
+    background-color: black;
+    color:white;
+}
+
+.retailer-btn {
+    border-radius: 20px;
+    border:2px solid #000;
+    
+    height:24px;
+    text-align: center;
+    position: absolute;
+    right: 10%;
+    width: 200px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding:5px 10px;
+    background-color: white;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+/* listing section */
+.item-listing {
+    position: absolute;
+    top:70px;
+    left:40px;
+    background-color: white;
+    box-shadow: 0px 0px 0.25rem #222;
+    z-index: 2;
+    border-radius: 5px;
+    width: 280px;
+}
+
+.item-listing .listing-body {
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+.item-listing .listing-header {
+    background-color: #000;
+    color: white;
+    padding: 0.5rem;
+    font-weight: 600;
+    font-size: 14px;
+    text-transform: uppercase;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.listing-item  {
+    padding: 20px 0.75rem;
+    cursor: pointer;
+    /* justify-content: ; */
+}
+
+.listing-item > * {
+    pointer-events: none;
+}
+
+.listing-item:hover {
+    background-color: #f2f2f2;
+}
+
+.listing-item img {
+    margin-right: 2px;
+}
+
+.listing-item + .listing-item {
+    border-top: 3px solid #f2f2f2;
+}
+
+.listing-item .details-section {
+    width: 85%;
+}
+
+.listing-item .title {
+    font-weight: 600;
+    font-size: 15px;
+    color:#000
+}
+
+.listing-item .address {
+    font-weight: 600;
+    font-size: 13px;
+    margin-top:4px;
+    color:#2e2e2e;
+}
+
+.address .address-zip div {
+    margin-right: 5px;
+}
+
+.listing-item .direction {
+    align-items: center;
+    display: flex;
+    font-size: 1.5rem;
+}
+
+.listing-container {
+    padding: 10px;
+    height: 70vh;
+}
+
+.content .loading-text {
+    height: 100px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.listing-container .image-top {
+    background-color: #e3e3e3;
+    border-radius: 50%;
+    margin: 0 auto;
+
+    width: 70px;
+    height: 70px;
+}
+
+.listing-container .header {
+    align-items: center;
+    display: flex;
+    margin:20px 0px;
+    height: 70px;
+}
+
+.listing-container .header div {
+    position: relative;
+}
+
+.listing-container .header img {
+    position: absolute;
+    top:-10px;
+    left:7px;
+    /* width: 45px; */
+    height: 60px;
+}
+
+.listing-container .content {
+    font-weight: 600;
+    text-align: center;
+}
+
+.listing-container .content .description {
+    margin-bottom: 20px;
+    padding:0 10px;
+    font-size: 13px;
+}
+
+.card-item .retailer-btn {
+    display: none;
+}
+
+.card-list {
+    margin-top: 2rem;
+    cursor: pointer;
+}
+
+.card-item:first-child {
+    border-top: 2px solid #f3f3f3;
+}
+
+.card-item {
+    /* border-top: 2px solid #f3f3f3; */
+    border-bottom: 2px solid #f3f3f3;
+}
+
+.card-item {
+    justify-content: space-between;
+    align-items: center;
+    padding:0.5rem;
+}
+
+.card-item img {
+    height: 30px;
+}
+
+/* modal container */
+.modal-container {
+    position: absolute;
+    top:0px;
+    height: 100vh;
+    width: 100vw;
+    z-index: 3;
+    background-color: #2e2e2e25;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-body {
+    background: white;
+    width: 50%;
+    height:auto;
+    padding:15px;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 0px 0px 0.25rem #9e9e9e;
+}
+
+.modal-body .close-btn {
+    position: absolute;
+    top:10px;
+    right:10px;
+    background-color: #000;
+    color:white;
+    font-size: 1rem;
+    border-radius: 50%;
+    border:none;
+    width: 30px;
+    height:30px;
+    cursor: pointer;
+}
+
+.modal-body .modal-header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.modal-header .title {
+    margin:0px;
+    font-weight: 900;
+    font-size: 2rem;
+}
+
+.modal-header .subtitle {
+    font-weight: 600;
+}
+
+.modal-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 120px 120px;
+    grid-gap:10px;
+}
+
+.modal-content .card {
+    position: relative;
+    height: 100%;
+    border-radius: 5px;
+    background-color: #F2F2F2;
+}
+
+.modal-content .card .link-btn {
+    position: absolute;
+    color:black;
+    top:5px;
+    right:5px;
+    font-size: 13px;
+}
+
+.modal-content .card img {
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 10px;
+    height: 100px;
+    border-radius: 5px;
+}
+
+/* utility classes */
+.d-flex {
+    display: flex !important;
+}
+
+.d-none { 
+    display: none !important;
+}
+
+
+/* media queries */
+@media screen and (max-width:480px) {
+    .search-section {
+        max-height: 200px;
+        flex-direction: column;
+    }
+
+    .search-section .geocoder-wrapper {
+        height: 50px;
+    }
+
+    .item-listing .listing-header {
+        padding: 0.5rem;
+        line-height: 30px;
+    }
+
+    #geocoder {
+        width: 92%;
+    }
+
+    .geocoder-wrapper .btn-find {
+        width: 25%;
+        height: 93%;
+    }
+
+    .filter-wrapper {
+        height: 45px;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .filter-wrapper .toggler {
+        flex:1;
+    }
+
+    .filter-wrapper .toggler select {
+        width: 100%;
+    }
+
+    .filter-wrapper .view-wrapper {
+        flex: 0.8;
+        height: 100%;
+        display: flex !important;
+    }
+
+    .filter-wrapper .view-wrapper .view-btn {
+        height: 93%;
+    }
+
+    .retailer-btn {
+        display: none !important;
+    }
+
+    .item-listing {
+        display: none;
+        position: relative;
+        width: 100%;
+        top:0px;
+        left: 0;
+        box-shadow: none;
+        border-radius: 5px;
+    }
+
+    .listig-item .title {
+        font-size: 1rem;
+    }
+
+    .listing-item .address {
+        font-size: 14px;
+        color:#111;
+        font-weight: 600;
+    }
+
+    #map {
+        height: 80vh;
+    }
+
+    ::placeholder {
+        font-size: 14px;
+    }
+
+}
