@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sparkly Store Locator</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <div class="map-wrapper">
+        <div class="search-section d-flex">
+            <div class="geocoder-wrapper">
+                <div id="geocoder"></div>
+                <span class="custom-icon">
+                    <i class="fa fa-map-marker"></i>
+                </span>
+                <!-- <button class="btn btn-find">
+                    
+                </button> -->
+            </div>
+
+            <div class="filter-wrapper d-flex">
+                <div class="toggler">
+                    <select name="store-type" id="store-type">
+                        <option value="">Show All</option>
+                        <!-- <option value="Retail">Retail</option>
+                        <option value="Online Shop">Online Shop</option>
+                        <option value="Bar / Club">Bar / Club</option>
+                        <option value="Getränkemarkt">Getränkemarkt</option> -->
+                    </select>
+                </div>
+    
+                <div class="view-wrapper">
+                    <div class="view-btn" data-target="list">
+                        <i class="fa fa-list"></i>
+                        <!-- List -->
+                    </div>
+                    <div class="view-btn active" data-target="map">
+                        <i class="fa fa-map"></i>
+                        <!-- Map -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="retailer-btn" id="online-retailer-btn">
+                Explore online retailers
+            </div>
+           
+        </div>
+
+        <div class="item-listing">
+            <div class="listing-header">
+                0 Locations Found
+            </div>
+
+            <div class="listing-body"> 
+                <div class="listing-container">
+                    <div class="header">
+                        <div class="image-top">
+                            <img src="pin.png" alt="png" height="50px">
+                        </div>
+                    </div>
+
+                    <div class="content">
+                        <h5 class="loading-text">Loading ...</h5>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="map" id="map"></div>
+
+        <div class="modal-container d-none" id="online-retailer">
+            <div class="modal-body">
+                <button class="close-btn" id="modal-close-btn">
+                    <i class="fa fa-times"></i>
+                </button>
+
+                <div class="modal-header">
+                    <h1 class="title">ONLINE RETAILER</h1>
+                    <div class="subtitle">Select your favourite retailer to purchase  products online.</div>
+                </div>
+
+                <div class="modal-content" id="modal-content">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <script src="map.js"></script>
+</body>
+</html>

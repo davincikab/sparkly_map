@@ -2,7 +2,7 @@
 mapboxgl.accessToken = 'pk.eyJ1Ijoibm9yZGthcHBlcjI4IiwiYSI6ImNqejlpMTdlejAwenkzZXM2dDF1bmxtdTMifQ.Q_XssY9aSttop553aF4zlQ';
 const map = new mapboxgl.Map({
     container: 'map',
-    zoom: 11,
+    zoom: 9,
     // center: [8.2399623, 47.0944236],
     // center:[8.257938610086939, 47.0519115387323],
     center:[8.301914852978683, 46.983700318727045],
@@ -62,8 +62,8 @@ map.on('load', () => {
         'data': {"type":"FeatureCollection", "features":[]},
         'cluster': true,
         'clusterMinPoints':3,
-        'clusterMaxZoom':14,
-        'clusterRadius': 40,
+        'clusterMaxZoom':11,
+        'clusterRadius': 60,
     });
 
     // circle and symbol layers for rendering individual locations (unclustered points)
@@ -78,6 +78,57 @@ map.on('load', () => {
             'icon-allow-overlap':false
         },
         'paint': {}
+    });
+
+    map.addLayer({
+        'id': 'store-location-cluster',
+        'type': 'circle',
+        'source': 'locations',
+        filter: ['has', 'point_count'],
+        'paint': {
+            'circle-color':'#000',
+            'circle-opacity':0.3,
+            'circle-radius':29
+        }
+    });
+
+    map.addLayer({
+        'id': 'store-location-cluster-inner',
+        'type': 'circle',
+        'source': 'locations',
+        filter: ['has', 'point_count'],
+        'paint': {
+            'circle-color':'#000',
+            'circle-opacity':0.3,
+            'circle-radius':22
+        }
+    });
+
+    map.addLayer({
+        'id': 'store-cluster-inner',
+        'type': 'circle',
+        'source': 'locations',
+        filter: ['has', 'point_count'],
+        'paint': {
+            'circle-color':'#000',
+            'circle-opacity':0.8,
+            'circle-radius':15
+        }
+    });
+
+    map.addLayer({
+        id: 'cluster-count',
+        type: 'symbol',
+        source: 'locations',
+        filter: ['has', 'point_count'],
+        layout: {
+            'text-field': ['get', 'point_count_abbreviated'],
+            'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+            'text-size': 12
+        },
+        paint:{
+            'text-color':'white'
+        }
     });
 
     map.on('click', 'store-location', (e) => {
@@ -101,50 +152,24 @@ map.on('load', () => {
         if (!map.isSourceLoaded('locations') && !isInitialLoad) return;
         updateMarkers();
     });
+
+    map.on('click', 'store-location-cluster', zoomToCluster);
+    map.on('click', 'store-location-cluster-inner', zoomToCluster);
+    map.on('click', 'store-cluster-inner', zoomToCluster);
 });
 
 function updateMarkers() {
     const newMarkers = {};
-    let features = map.querySourceFeatures('locations');
+    const features = map.querySourceFeatures('locations');
     const clusterSource = map.getSource('locations');
 
     if(!features.length && isInitialLoad) return;
 
     let mapPins = features.filter(feature => !feature.properties.cluster);
-    let clusterPins = [];    
-    let clusters = features.filter(entry => entry.properties.cluster_id);
+    let clusterPins = [];
+
     
-
-    // for every cluster on the screen, create an HTML marker for it (if we didn't yet),
-    // and add it to the map if it's not there already
-    for (const feature of features) {
-        const coords = feature.geometry.coordinates;
-        const props = feature.properties;
-
-        if (!props.cluster) continue;
-        const id = props.cluster_id;
-
-        let marker = markers[id];
-        if (!marker) {
-            const el = createCustomIcon(props, coords);
-            marker = markers[id] = new mapboxgl.Marker({
-                element: el 
-            }).setLngLat(coords);
-        }
-
-        newMarkers[id] = marker;
-        
-        if (!markersOnScreen[id]) marker.addTo(map);
-    }
-
-    // for every marker we've added previously, remove those that are no longer visible
-    for (const id in markersOnScreen) {
-        if (!newMarkers[id]) markersOnScreen[id].remove();
-    }
-
-    markersOnScreen = newMarkers;
-
-    // markersOnScreen = newMarkers;
+    let clusters = features.filter(entry => entry.properties.cluster_id);
 
     // console.log("Cluster All: ", clusters);
     if(!clusters.length) {
@@ -170,7 +195,6 @@ function updateMarkers() {
         });
     }
 }
-
 
 
 function fetchStoreLocation() {
@@ -458,10 +482,15 @@ function createGeoJson(data) {
     return fc;
 }
 
-function zoomToCluster(e, id) {
-    let { coord } = e.target.dataset;
+function zoomToCluster(e) {
+    console.log(e);
 
-    var clusterId = parseInt(id);
+    let feature = e.features[0];
+    let coord = e.LngLat;
+
+    // let { coord } = e.target.dataset;
+
+    var clusterId = parseInt(feature.id);
     map.getSource('locations').getClusterExpansionZoom(
         clusterId,
         function(err, zoom) {
@@ -470,8 +499,8 @@ function zoomToCluster(e, id) {
             if (err) return;
             
             map.easeTo({
-                center: eval(coord),
-                zoom: zoom+0.3
+                center: coord,
+                zoom: zoom+1
             });
         }
     );

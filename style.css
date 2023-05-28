@@ -24,7 +24,7 @@ body {
     align-items: center;
     display: flex;
     /* border-color: #22a7b5; */
-    background-color:rgba(0, 0, 0, 0.3);
+    background-color:#0000004d;
     cursor: pointer;
 }
 
@@ -33,7 +33,7 @@ body {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background-color:rgba(0, 0, 0, 0.3);
+    background-color:#0000004d;
     z-index: 0;
 
     justify-content: center;
