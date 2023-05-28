@@ -4,8 +4,8 @@ const map = new mapboxgl.Map({
     container: 'map',
     zoom: 11,
     // center: [8.2399623, 47.0944236],
-    // center:[8.257938610086939, 47.0519115387323],
-    center:[8.301914852978683, 46.983700318727045],
+    center:[8.257938610086939, 47.0519115387323],
+    // center:[8.301914852978683, 46.983700318727045],
     projection:'mercator',
     // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
     style: 'mapbox://mapbox/nordkapper28/clhe1mjow015r01pg4bif3fsc'

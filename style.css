@@ -99,17 +99,22 @@ body {
     font-weight: 600;
 }
 
+.popup-content .details-section {
+    margin-bottom: 10px;
+}
+
 .popup-content .direction-button {
     background-color: #000;
     color:white;
     border:none;
     border-radius: 20px;
-    padding:5px;
+    padding:8px 12px;
     text-align: center;
 
     width: 60%;
-    margin-top: 5px;
-    margin-left: 20%;
+    margin-top: 8px;
+    margin-left: 15%;
+    text-decoration: none;
 }
 
 /* search header */
